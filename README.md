@@ -64,12 +64,14 @@ Productivity boosts: Key mappings, Harpoon, autopairs, commenting tools.
 ## Installation
 
 1. Clone this repository 
-'''bash
+```bash
 git clone https://github.com/superunyx/nvim-config.git ~/.config/nvim
+```
 
 2. Open Neovim and install plugins
-'''vim
+```vim
 :PackerSync
+```
 
 ## Contributing
 
