@@ -67,7 +67,7 @@ Productivity boosts: Key mappings, Harpoon, autopairs, commenting tools.
 
 Make sure you have Neovim and Git installed on your system.
 
-2. Clone this repository 
+2. Clone this repository to your Neovim folder
 ```bash
 git clone https://github.com/superunyx/nvim-config.git pathtonvimfolder/nvim
 ```
