@@ -69,7 +69,7 @@ Make sure you have Neovim and Git installed on your system.
 
 2. Clone this repository 
 ```bash
-git clone https://github.com/superunyx/nvim-config.git ~/.config/nvim
+git clone https://github.com/superunyx/nvim-config.git pathtonvimfolder/nvim
 ```
 
 3. Open Neovim and install plugins
