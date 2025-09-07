@@ -63,15 +63,23 @@ Productivity boosts: Key mappings, Harpoon, autopairs, commenting tools.
 
 ## Installation
 
-1. Clone this repository 
+1. Inital Setup
+
+Make sure you have Neovim and Git installed on your system.
+
+2. Clone this repository 
 ```bash
 git clone https://github.com/superunyx/nvim-config.git ~/.config/nvim
 ```
 
-2. Open Neovim and install plugins
+3. Open Neovim and install plugins
 ```vim
-:PackerSync
+:Lazy sync
 ```
+
+4. Update any plugins inside Lazyvim
+
+Once inside the Lazy menu simple press "Shift+U" to update all the plugins.
 
 ## Contributing
 
