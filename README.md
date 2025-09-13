@@ -7,59 +7,59 @@ This repository contains my personal Neovim configuration, including all my key 
 ## Configuration Highlights
 ### Core Settings (config/)
 
-autocmds.lua – Defines custom auto commands for events such as opening files or switching buffers.
+1. Autocmds – Defines custom auto commands for events such as opening files or switching buffers.
 
-floaterminal.lua – Configures floating terminal windows inside Neovim.
+2. Floaterminal – Configures floating terminal windows inside Neovim.
 
-jdtls.lua – Setup for Java LSP (Language Server Protocol) using jdtls for intelligent code navigation and completion.
+3. jdtls – Setup for Java LSP (Language Server Protocol) using jdtls for intelligent code navigation and completion.
 
-keymaps.lua – Custom key bindings to streamline workflow and improve efficiency.
+4. Keymaps – Custom key bindings to streamline workflow and improve efficiency.
 
-options.lua – General Neovim options like line numbers, tab size, search behavior, and more.
+5. Options – General Neovim options like line numbers, tab size, search behavior, and more.
 
 ### Plugins (plugins/)
 
-autopairs.lua – Automatically closes brackets, quotes, and parentheses.
+1. Autopairs – Automatically closes brackets, quotes, and parentheses.
 
-cmp.lua – Setup for nvim-cmp completion plugin with snippet support.
+2. cmp – Setup for nvim-cmp completion plugin with snippet support.
 
-colorscheme.lua – Defines the preferred colorscheme and highlights.
+3. Colorscheme – Defines the preferred colorscheme and highlights.
 
-comment.lua – Plugin to comment/uncomment lines or blocks quickly.
+4. Comment – Plugin to comment/uncomment lines or blocks quickly.
 
-git.lua – Integration with Git for inline diff, blame, and commands.
+5. Git – Integration with Git for inline diff, blame, and commands.
 
-harpoon.lua – Navigation between frequently used files with Harpoon.
+6. Harpoon – Navigation between frequently used files with Harpoon.
 
-lsp-config.lua – Core LSP setup for multiple languages with diagnostics, code actions, and formatting.
+7. lsp-config – Core LSP setup for multiple languages with diagnostics, code actions, and formatting.
 
-lualine.lua – Status line configuration for a modern, informative interface.
+8. Lualine – Status line configuration for a modern, informative interface.
 
-none-ls.lua – Setup for null-ls to integrate formatters and linters.
+9. none-ls – Setup for null-ls to integrate formatters and linters.
 
-nvim-dap.lua – Debugging setup using DAP (Debug Adapter Protocol).
+10. nvim-dap – Debugging setup using DAP (Debug Adapter Protocol).
 
-nvim-tree.lua – File explorer with tree view, icons, and navigation features.
+11. nvim-tree – File explorer with tree view, icons, and navigation features.
 
-springboot-nvim.lua – Support for Spring Boot development.
+12. Springboot-nvim – Support for Spring Boot development.
 
-telescope.lua – Fuzzy file finder, live grep, and other productivity features.
+13. Telescope – Fuzzy file finder, live grep, and other productivity features.
 
-treesitter.lua – Advanced syntax highlighting, parsing, and code folding.
+14. Treesitter – Advanced syntax highlighting, parsing, and code folding.
 
-whichkey.lua – Shows available key bindings in a popup, improving discoverability.
+15. Whichkey – Shows available key bindings in a popup, improving discoverability.
 
 ### Features
 
-Fully modular: Config separated into core and plugin configurations for easier maintenance.
+*Fully modular: Config separated into core and plugin configurations for easier maintenance.
 
-LSP-ready: Supports multiple languages with nvim-lspconfig.
+*LSP-ready: Supports multiple languages with nvim-lspconfig.
 
-File navigation & search: With telescope and nvim-tree.
+*File navigation & search: With telescope and nvim-tree.
 
-Debugging & development: Using nvim-dap and language-specific tools.
+*Debugging & development: Using nvim-dap and language-specific tools.
 
-Productivity boosts: Key mappings, Harpoon, autopairs, commenting tools.
+*Productivity boosts: Key mappings, Harpoon, autopairs, commenting tools.
 
 ## Installation
 
@@ -67,17 +67,20 @@ Productivity boosts: Key mappings, Harpoon, autopairs, commenting tools.
 
 Make sure you have Neovim and Git installed on your system.
 
-2. Clone this repository to your Neovim folder
+2. Clear Neovim folder
+    * Make sure your Neovim folder is clean (otherwise it creates an issue where the usual init.vim(for windows) is loaded and the init.lua inside the config doesnt work.)
+
+3. Clone this repository to your Neovim folder
 ```bash
 git clone https://github.com/superunyx/nvim-config.git pathtonvimfolder/nvim
 ```
 
-3. Open Neovim and install plugins
+4. Open Neovim and install plugins
 ```vim
-:Lazy sync
+:Lazy
 ```
 
-4. Update any plugins inside Lazyvim
+5. Update any plugins inside Lazyvim
 
 Once inside the Lazy menu simple press "Shift+U" to update all the plugins.
 
