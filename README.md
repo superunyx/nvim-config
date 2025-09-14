@@ -1,4 +1,4 @@
-<div align="center"># Neovim configuration</div>
+<h1 align="center">Neovim configuration</h1>
 
 Neovim config for daily driver
 
