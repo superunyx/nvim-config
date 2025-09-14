@@ -1,4 +1,4 @@
-# Neovim configuration
+<div align="center"># Neovim configuration</div>
 
 Neovim config for daily driver
 
@@ -61,6 +61,7 @@ This repository contains my personal Neovim configuration, including all my key 
 
 * Productivity boosts: Key mappings, Harpoon, autopairs, commenting tools.
 
+
 ## Installation
 
 ### 1. Inital Setup
@@ -69,7 +70,7 @@ Make sure you have [Neovim](https://github.com/neovim/neovim) and [Git](https://
 
 ### 2. Create Neovim config folder
 
-For Windows:<br>
+For Windows:<br><br>
 Create a Neovim config folder name 'nvim' like this:
 ```makefile
 C:\Users\<user>\AppData\Local\nvim
