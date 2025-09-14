@@ -13,8 +13,7 @@ return {
             auto_reload_on_write = true,
 
             sort = {
-                sorter = "modification_time", -- sort by modification time
-                reverse = true,               -- put most recently modified at the bottom
+                sorter = "modification_time",
             },
         })
     end
