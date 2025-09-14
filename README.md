@@ -51,15 +51,15 @@ This repository contains my personal Neovim configuration, including all my key 
 
 ### Features
 
-*Fully modular: Config separated into core and plugin configurations for easier maintenance.
+* Fully modular: Config separated into core and plugin configurations for easier maintenance.
 
-*LSP-ready: Supports multiple languages with nvim-lspconfig.
+* LSP-ready: Supports multiple languages with nvim-lspconfig.
 
-*File navigation & search: With telescope and nvim-tree.
+* File navigation & search: With telescope and nvim-tree.
 
-*Debugging & development: Using nvim-dap and language-specific tools.
+* Debugging & development: Using nvim-dap and language-specific tools.
 
-*Productivity boosts: Key mappings, Harpoon, autopairs, commenting tools.
+* Productivity boosts: Key mappings, Harpoon, autopairs, commenting tools.
 
 ## Installation
 
@@ -69,15 +69,15 @@ Make sure you have [Neovim](https://github.com/neovim/neovim) and [Git](https://
 
 ### 2. Create Neovim config folder
 
-For Windows:
-        Create a Neovim config folder name 'nvim' like this:
-        ```makefile
-        C:\Users\<user>\AppData\Local\nvim
-        ```
-For linux: 
-        ```bash
-        mkdir ~/.config/nvim
-        ```
+For Windows:<br>
+Create a Neovim config folder name 'nvim' like this:
+```makefile
+C:\Users\<user>\AppData\Local\nvim
+```
+For linux:<br> 
+```bash
+mkdir ~/.config/nvim
+```
 
 ### 3. Clone this repository to your Neovim folder
 
