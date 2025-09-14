@@ -63,24 +63,40 @@ This repository contains my personal Neovim configuration, including all my key 
 
 ## Installation
 
-1. Inital Setup
+### 1. Inital Setup
 
-Make sure you have Neovim and Git installed on your system.
+Make sure you have [Neovim](https://github.com/neovim/neovim) and [Git](https://git-scm.com/) installed for your operating system.
 
-2. Clear Neovim folder
-    * Make sure your Neovim folder is clean (otherwise it creates an issue where the usual init.vim(for windows) is loaded and the init.lua inside the config doesnt work.)
+### 2. Create Neovim config folder
 
-3. Clone this repository to your Neovim folder
+For Windows:
+        Create a Neovim config folder name 'nvim' like this:
+        ```makefile
+        C:\Users\<user>\AppData\Local\nvim
+        ```
+For linux: 
+        ```bash
+        mkdir ~/.config/nvim
+        ```
+
+### 3. Clone this repository to your Neovim folder
+
+For Windows: 
 ```bash
-git clone https://github.com/superunyx/nvim-config.git pathtonvimfolder/nvim
+git clone https://github.com/superunyx/nvim-config.git C:\Users\<user>\AppData\Local\nvim
 ```
 
-4. Open Neovim and install plugins
+For linux:
+```bash
+git clone https://github.com/superunyx/nvim-config.git ~/.config/nvim
+```
+
+### 4. Open Neovim and install plugins
 ```vim
 :Lazy
 ```
 
-5. Update any plugins inside Lazyvim
+### 5. Update any plugins inside Lazyvim
 
 Once inside the Lazy menu simple press "Shift+U" to update all the plugins.
 
