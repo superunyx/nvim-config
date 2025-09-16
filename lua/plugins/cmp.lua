@@ -8,6 +8,9 @@ return {
             "rafamadriz/friendly-snippets",
         }
     },
+    {
+        "github/copilot.vim",
+    },
     -- cmp-nvim-lsp provides language specific completion suggestions to nvim-cmp
     {
         "hrsh7th/cmp-nvim-lsp",
