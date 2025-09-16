@@ -23,33 +23,33 @@ This repository contains my personal Neovim configuration, including all my key 
 
 2. cmp – Setup for nvim-cmp completion plugin with snippet support.
 
-4. Github Copilot - Added copilot integration for neovim.
+3. Github Copilot - Added copilot integration for neovim.
 
-3. Colorscheme – Defines the preferred colorscheme and highlights.
+4. Colorscheme – Defines the preferred colorscheme and highlights.
 
-4. Comment – Plugin to comment/uncomment lines or blocks quickly.
+5. Comment – Plugin to comment/uncomment lines or blocks quickly.
 
-5. Git – Integration with Git for inline diff, blame, and commands.
+6. Git – Integration with Git for inline diff, blame, and commands.
 
-6. Harpoon – Navigation between frequently used files with Harpoon.
+7. Harpoon – Navigation between frequently used files with Harpoon.
 
-7. lsp-config – Core LSP setup for multiple languages with diagnostics, code actions, and formatting.
+8. lsp-config – Core LSP setup for multiple languages with diagnostics, code actions, and formatting.
 
-8. Lualine – Status line configuration for a modern, informative interface.
+9. Lualine – Status line configuration for a modern, informative interface.
 
-9. none-ls – Setup for null-ls to integrate formatters and linters.
+10. none-ls – Setup for null-ls to integrate formatters and linters.
 
-10. nvim-dap – Debugging setup using DAP (Debug Adapter Protocol).
+11. nvim-dap – Debugging setup using DAP (Debug Adapter Protocol).
 
-11. nvim-tree – File explorer with tree view, icons, and navigation features.
+12. nvim-tree – File explorer with tree view, icons, and navigation features.
 
-12. Springboot-nvim – Support for Spring Boot development.
+13. Springboot-nvim – Support for Spring Boot development.
 
-13. Telescope – Fuzzy file finder, live grep, and other productivity features.
+14. Telescope – Fuzzy file finder, live grep, and other productivity features.
 
-14. Treesitter – Advanced syntax highlighting, parsing, and code folding.
+15. Treesitter – Advanced syntax highlighting, parsing, and code folding.
 
-15. Whichkey – Shows available key bindings in a popup, improving discoverability.
+16. Whichkey – Shows available key bindings in a popup, improving discoverability.
 
 ### Features
 
