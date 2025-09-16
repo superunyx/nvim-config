@@ -23,6 +23,8 @@ This repository contains my personal Neovim configuration, including all my key 
 
 2. cmp – Setup for nvim-cmp completion plugin with snippet support.
 
+4. Github Copilot - Added copilot integration for neovim.
+
 3. Colorscheme – Defines the preferred colorscheme and highlights.
 
 4. Comment – Plugin to comment/uncomment lines or blocks quickly.
