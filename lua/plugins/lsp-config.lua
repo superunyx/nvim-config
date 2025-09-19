@@ -37,7 +37,7 @@ return {
         "neovim/nvim-lspconfig",
         config = function()
             -- get access to the lspconfig plugins functions
-            local lspconfig = require("lspconfig")
+            local lspconfig = vim.lsp.config
 
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
