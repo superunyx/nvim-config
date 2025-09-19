@@ -38,18 +38,19 @@ return {
         config = function()
             -- get access to the lspconfig plugins functions
             local lspconfig = vim.lsp.config
-
+            -- get the capabilities from nvim-cmp for autocompletion
             local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
             -- setup the lua language server
-            lspconfig.lua_ls.setup({
+            vim.lsp.config.lua_ls = {
                 capabilities = capabilities,
-            })
-
+            }
+            vim.lsp.enable("lua_ls")
             -- setup the typescript language server
-            lspconfig.ts_ls.setup({
+            vim.lsp.config.ts_ls = {
                 capabilities = capabilities,
-            })
+            }
+            vim.lsp.enable("ts_ls")
 
             -- Set vim motion for <Space> + c + h to show code documentation about the code the cursor is currently over if available
             vim.keymap.set("n", "<leader>ch", vim.lsp.buf.hover, { desc = "[C]ode [H]over Documentation" })
