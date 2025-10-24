@@ -144,6 +144,11 @@ local function setup_jdtls()
      -- Configure settings in the JDTLS server
     local settings = {
         java = {
+            errors = {
+                incompleteClasspath = {
+                    severity = "ignore"
+                }
+            },
             -- Enable code formatting
             format = {
                 enabled = true,
