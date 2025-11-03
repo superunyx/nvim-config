@@ -103,6 +103,13 @@ git clone https://github.com/superunyx/nvim-config.git ~/.config/nvim
 
 Once inside the Lazy menu simple press "Shift+U" to update all the plugins.
 
+### 6. Dependencies
+
+If you are developing make sure to install live-server using:
+```bash
+sudo npm install -g live-server
+```
+
 ## Contributing
 
 This is a personal configuration, but feel free to open issues or pull requests if you have improvements or bug fixes.
