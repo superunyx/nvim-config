@@ -1,4 +1,5 @@
 return {
+    --[[
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
         -- ts-autotag utilizes treesitter to understand the code structure to automatically close tsx tags
@@ -22,4 +23,5 @@ return {
             }
         })
     end
+    --]]
 }

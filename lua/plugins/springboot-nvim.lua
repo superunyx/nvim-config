@@ -1,4 +1,5 @@
 return {
+    --[[
     "elmcgill/springboot-nvim",
     dependencies = {
         "neovim/nvim-lspconfig",
@@ -20,4 +21,5 @@ return {
         -- run the setup function with default configuration
         springboot_nvim.setup({})
     end
+    --]]
 }

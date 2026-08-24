@@ -63,4 +63,5 @@ end, {})
 -- Optional keymaps
 vim.keymap.set("n", "<leader>t", ":Floaterminal<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>rj", ":JavaRun<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>jr", ":JavaRun<CR>", { noremap = true, silent = true })
 

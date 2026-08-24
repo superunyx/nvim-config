@@ -45,9 +45,11 @@ require("config.keymaps")
 -- Pass it the options we specified above
 require("lazy").setup("plugins", opts)
 require("config.floaterminal")
+require("config.antigravity")
 
 
 
+--[[
 vim.diagnostic.config({
     virtual_text = { severity = { min = vim.diagnostic.severity.ERROR } },
     signs = { severity = { min = vim.diagnostic.severity.ERROR } },
@@ -55,3 +57,5 @@ vim.diagnostic.config({
     severity_sort = true,
     update_in_insert = false,
 })
+--]]
+vim.diagnostic.enable(false)

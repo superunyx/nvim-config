@@ -1,4 +1,5 @@
 return {
+    --[[
     "windwp/nvim-autopairs",
     event = { "InsertEnter" },
     dependencies = {
@@ -22,4 +23,5 @@ return {
         -- Whenever we accept a choice from an autocompletion, make sure that any pairs are automatically closed
         cmp.event:on("confirm_done", cmp_autopairs.on_confirm_done())
     end
+    --]]
 }

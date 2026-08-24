@@ -1,4 +1,5 @@
 return {
+    --[[
     {
         "williamboman/mason.nvim",
         config = function()
@@ -68,4 +69,5 @@ return {
             vim.keymap.set("n", "<leader>cD", vim.lsp.buf.declaration, { desc = "[C]ode Goto [D]eclaration" })
         end
     }
+    --]]
 }

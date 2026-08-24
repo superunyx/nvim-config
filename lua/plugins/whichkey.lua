@@ -8,6 +8,9 @@ return {
     which_key.setup()
 
     which_key.add({
+      { "<leader>a", group = "[A]ntigravity" },
+      { "<leader>a_", hidden = true },
+
       { "<leader>/", group = "Comments" },
       { "<leader>/_", hidden = true },
 
