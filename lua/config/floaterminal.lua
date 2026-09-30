@@ -60,8 +60,30 @@ vim.api.nvim_create_user_command("JavaRun", function()
   toggle_terminal(string.format("cd %s && javac %s && java %s", dir, file, classname))
 end, {})
 
--- Optional keymaps
-vim.keymap.set("n", "<leader>t", ":Floaterminal<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>rj", ":JavaRun<CR>", { noremap = true, silent = true })
-vim.keymap.set("n", "<leader>jr", ":JavaRun<CR>", { noremap = true, silent = true })
+-- Python run (on current file)
+vim.api.nvim_create_user_command("PythonRun", function()
+  local file = vim.fn.expand("%:p")
+  local dir = vim.fn.expand("%:p:h")
+  toggle_terminal(string.format("cd %s && python3 %s", dir, file))
+end, {})
+
+-- Filetype-aware smart runner (runs Java when in .java, Python when in .py)
+vim.api.nvim_create_user_command("CodeRun", function()
+  local ft = vim.bo.filetype
+  if ft == "java" then
+    vim.cmd("JavaRun")
+  elseif ft == "python" then
+    vim.cmd("PythonRun")
+  else
+    vim.notify("No run command configured for filetype: " .. ft, vim.log.levels.WARN)
+  end
+end, {})
+
+-- Keymaps
+vim.keymap.set("n", "<leader>t", ":Floaterminal<CR>", { noremap = true, silent = true, desc = "Toggle [T]erminal" })
+vim.keymap.set("n", "<leader>rj", ":JavaRun<CR>", { noremap = true, silent = true, desc = "[R]un [J]ava" })
+vim.keymap.set("n", "<leader>jr", ":JavaRun<CR>", { noremap = true, silent = true, desc = "[J]ava [R]un" })
+vim.keymap.set("n", "<leader>rp", ":PythonRun<CR>", { noremap = true, silent = true, desc = "[R]un [P]ython" })
+vim.keymap.set("n", "<leader>pr", ":PythonRun<CR>", { noremap = true, silent = true, desc = "[P]ython [R]un" })
+vim.keymap.set("n", "<leader>rr", ":CodeRun<CR>", { noremap = true, silent = true, desc = "[R]un current file (Smart)" })
 

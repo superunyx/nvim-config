@@ -1,3 +1,18 @@
+-- Ensure user binary paths are always in PATH even when launched from GUI / Hyprland
+local user_bins = {
+    vim.fn.expand("~/.npm-global/bin"),
+    vim.fn.expand("~/.local/share/mise/installs/python/latest/bin"),
+    vim.fn.expand("~/.local/share/mise/shims"),
+    vim.fn.expand("~/.local/bin"),
+    vim.fn.expand("~/.local/share/nvim/mason/bin"),
+}
+for _, dir in ipairs(user_bins) do
+    if vim.fn.isdirectory(dir) == 1 and not string.find(vim.env.PATH, dir, 1, true) then
+        vim.env.PATH = dir .. ":" .. vim.env.PATH
+    end
+end
+
+require("config.remote_clipboard").setup()
 -- Left column and similar settings 
 vim.opt.number = true --display line numbers
 vim.opt.relativenumber = true --display relative number line
@@ -19,6 +34,8 @@ vim.opt.breakindent = true
 --General Behaviours
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_ruby_provider = 0
 vim.opt.backup = false
 vim.opt.clipboard = "unnamedplus"
 vim.opt.conceallevel = 0

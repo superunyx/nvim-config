@@ -32,6 +32,15 @@ return {
       { "<leader>J", group = "[J]ava" },
       { "<leader>J_", hidden = true },
 
+      { "<leader>b", group = "[B]ookmarks" },
+      { "<leader>b_", hidden = true },
+
+      { "<leader>m", group = "[M]olten / Jupyter" },
+      { "<leader>m_", hidden = true },
+
+      { "<leader>r", group = "[R]un" },
+      { "<leader>r_", hidden = true },
+
       { "<leader>w", group = "[W]indow" },
       { "<leader>w_", hidden = true },
     })

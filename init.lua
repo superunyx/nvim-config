@@ -1,5 +1,10 @@
 vim.opt.clipboard = "unnamedplus"
 
+-- Neovim 0.12 compatibility for plugins expecting vim.treesitter.language.ft_to_lang
+if vim.treesitter and vim.treesitter.language and not vim.treesitter.language.ft_to_lang then
+    vim.treesitter.language.ft_to_lang = vim.treesitter.language.get_lang
+end
+
 -- Declare the path where lazy will clone plugin code
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
@@ -46,16 +51,17 @@ require("config.keymaps")
 require("lazy").setup("plugins", opts)
 require("config.floaterminal")
 require("config.antigravity")
+require("config.folder_bookmarks")
 
 
 
---[[
-vim.diagnostic.config({
-    virtual_text = { severity = { min = vim.diagnostic.severity.ERROR } },
-    signs = { severity = { min = vim.diagnostic.severity.ERROR } },
-    underline = { severity = { min = vim.diagnostic.severity.ERROR } },
-    severity_sort = true,
-    update_in_insert = false,
+-- Keep diagnostics disabled by default, only enable for Python
+vim.api.nvim_create_autocmd("FileType", {
+    callback = function(args)
+        if vim.bo[args.buf].filetype ~= "python" then
+            vim.diagnostic.enable(false, { bufnr = args.buf })
+        else
+            vim.diagnostic.enable(true, { bufnr = args.buf })
+        end
+    end,
 })
---]]
-vim.diagnostic.enable(false)

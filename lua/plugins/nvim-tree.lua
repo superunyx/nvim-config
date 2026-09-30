@@ -10,7 +10,23 @@ return {
                 custom = { "*.class" },   -- hide all .class files
             },
             hijack_netrw = true,
+            hijack_cursor = true,
+            hijack_directories = {
+                enable = true,
+                auto_open = true,
+            },
+            sync_root_with_cwd = true,
             auto_reload_on_write = true,
+            view = {
+                preserve_window_proportions = true,
+                cursorline = true,
+            },
+            on_attach = function(bufnr)
+                local api = require("nvim-tree.api")
+                api.config.mappings.default_on_attach(bufnr)
+                vim.keymap.set('n', 'j', 'j', { buffer = bufnr, noremap = true, silent = true, nowait = true })
+                vim.keymap.set('n', 'k', 'k', { buffer = bufnr, noremap = true, silent = true, nowait = true })
+            end,
 
             actions = {
                 open_file = {
@@ -40,6 +56,21 @@ return {
             sort = {
                 sorter = "modification_time",
             },
+        })
+
+        -- Ensure cursor and focus are inside nvim-tree immediately when opening a directory with :e <folder>
+        vim.api.nvim_create_autocmd("BufEnter", {
+            nested = true,
+            callback = function(args)
+                if vim.fn.isdirectory(args.file) == 1 then
+                    local api = require("nvim-tree.api")
+                    if not api.tree.is_visible() then
+                        api.tree.open({ path = args.file })
+                    else
+                        api.tree.focus()
+                    end
+                end
+            end,
         })
     end
 }

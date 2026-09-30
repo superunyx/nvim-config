@@ -1,158 +1,51 @@
--- Loads the Omarchy theme file but filters out LazyVim references
-local theme_file = vim.fn.expand("~/.config/omarchy/current/theme/neovim.lua")
-local colorscheme_to_load = nil
+-- Loads the active Omarchy theme from ~/.local/state/omarchy/current/theme/neovim.lua
+-- and adapts it for standalone lazy.nvim (stripping LazyVim/LazyVim and applying the colorscheme).
+local theme_file = vim.fn.expand("~/.local/state/omarchy/current/theme/neovim.lua")
 
--- Read the Omarchy theme file to extract colorscheme
 if vim.fn.filereadable(theme_file) == 1 then
 	local ok, theme_plugins = pcall(dofile, theme_file)
 	if ok and type(theme_plugins) == "table" then
+		local colorscheme = nil
+		local plugins = {}
+
 		for _, plugin in ipairs(theme_plugins) do
-			if
-				type(plugin) == "table"
-				and plugin[1] == "LazyVim/LazyVim"
-				and plugin.opts
-				and plugin.opts.colorscheme
-			then
-				colorscheme_to_load = plugin.opts.colorscheme
-				break
+			if type(plugin) == "table" then
+				if plugin[1] == "LazyVim/LazyVim" then
+					if plugin.opts and plugin.opts.colorscheme then
+						colorscheme = plugin.opts.colorscheme
+					end
+				else
+					table.insert(plugins, plugin)
+				end
 			end
+		end
+
+		if #plugins > 0 then
+			plugins[1].lazy = false
+			plugins[1].priority = 1000
+
+			if colorscheme then
+				local original_config = plugins[1].config
+				plugins[1].config = function(plugin_spec, opts)
+					if type(original_config) == "function" then
+						original_config(plugin_spec, opts)
+					end
+					pcall(vim.cmd.colorscheme, colorscheme)
+				end
+			end
+
+			return plugins
 		end
 	end
 end
 
--- Map Omarchy colorscheme names to actual plugins
-local theme_specs = {
-	catppuccin = {
-		"catppuccin/nvim",
-		name = "catppuccin",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			require("catppuccin").setup({})
-			vim.cmd.colorscheme("catppuccin")
-		end,
-	},
-	["catppuccin-latte"] = {
-		"catppuccin/nvim",
-		name = "catppuccin",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			require("catppuccin").setup({
-				flavour = "latte",
-			})
-			vim.cmd.colorscheme("catppuccin-latte")
-		end,
-	},
-	tokyonight = {
-		"folke/tokyonight.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("tokyonight")
-		end,
-	},
-	gruvbox = {
-		"ellisonleao/gruvbox.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("gruvbox")
-		end,
-	},
-	kanagawa = {
-		"rebelot/kanagawa.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("kanagawa")
-		end,
-	},
-	["rose-pine"] = {
-		"rose-pine/neovim",
-		name = "rose-pine",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("rose-pine")
-		end,
-	},
-	everforest = {
-		"neanias/everforest-nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			require("everforest").setup({
-				background = "soft",
-			})
-			vim.cmd.colorscheme("everforest")
-		end,
-	},
-	nord = {
-		"shaunsingh/nord.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("nord")
-		end,
-	},
-	bamboo = {
-		"ribru17/bamboo.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			require("bamboo").setup({})
-			require("bamboo").load()
-		end,
-	},
-    nordfox = {
-	    "EdenEast/nightfox.nvim",
-	    lazy = false,
-	    priority = 1000,
-	    config = function()
-		    require("nightfox").setup({})
-		    vim.cmd.colorscheme("nordfox")
-	    end,
-    },
-	matteblack = {
-		"tahayvr/matteblack.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("matteblack")
-		end,
-	},
-	["monokai-pro"] = {
-		"gthelding/monokai-pro.nvim",
-		lazy = false,
-		priority = 1000,
-		config = function()
-			require("monokai-pro").setup({
-				filter = "ristretto",
-				override = function()
-					return {
-						NonText = { fg = "#948a8b" },
-						MiniIconsGrey = { fg = "#948a8b" },
-						MiniIconsRed = { fg = "#fd6883" },
-						MiniIconsBlue = { fg = "#85dacc" },
-						MiniIconsGreen = { fg = "#adda78" },
-						MiniIconsYellow = { fg = "#f9cc6c" },
-						MiniIconsOrange = { fg = "#f38d70" },
-						MiniIconsPurple = { fg = "#a8a9eb" },
-						MiniIconsAzure = { fg = "#a8a9eb" },
-						MiniIconsCyan = { fg = "#85dacc" },
-					}
-				end,
-			})
-			vim.cmd.colorscheme("monokai-pro")
-		end,
-	},
+-- Fallback if Omarchy theme file is not available
+return {
+	"ribru17/bamboo.nvim",
+	lazy = false,
+	priority = 1000,
+	config = function()
+		require("bamboo").setup({})
+		require("bamboo").load()
+	end,
 }
-
--- Return the appropriate theme spec based on what Omarchy selected
-if colorscheme_to_load and theme_specs[colorscheme_to_load] then
-	return theme_specs[colorscheme_to_load]
-else
-	-- Fallback to bamboo theme for osaka-jade (which doesn't use LazyVim wrapper)
-	return theme_specs["bamboo"]
-end
