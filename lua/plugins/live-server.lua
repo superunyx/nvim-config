@@ -18,11 +18,11 @@ return {
   config = function()
     local live_server = require("live-server")
 
-    -- Cleanly stop any existing live-server instances across all directories
-    local function stop_all_instances()
+    -- Helper to access internal server module and instances table
+    local function get_live_server_internals()
       local ok, ls = pcall(require, "live-server")
       if not ok then
-        return
+        return nil, nil
       end
       local server_mod, instances_tbl
       local i = 1
@@ -39,7 +39,12 @@ return {
         end
         i = i + 1
       end
+      return server_mod, instances_tbl
+    end
 
+    -- Cleanly stop any existing live-server instances across all directories
+    local function stop_all_instances()
+      local server_mod, instances_tbl = get_live_server_internals()
       if instances_tbl and server_mod then
         for dir, inst in pairs(instances_tbl) do
           pcall(server_mod.stop, inst)
@@ -128,6 +133,23 @@ return {
       noremap = true,
       silent = true,
       desc = "Stop Live Server",
+    })
+
+    -- Instant Auto-Reload on Save:
+    -- Whenever any buffer is saved in Neovim, immediately broadcast reload to the browser!
+    -- This fixes Linux non-recursive inotify limitations where saving files in subdirectories (like HTML/, css/, js/) was completely ignored by the OS watcher.
+    vim.api.nvim_create_autocmd("BufWritePost", {
+      group = vim.api.nvim_create_augroup("LiveServerAutoReloadOnSave", { clear = true }),
+      callback = function(args)
+        local server_mod, instances_tbl = get_live_server_internals()
+        if instances_tbl and server_mod then
+          local buf_path = vim.api.nvim_buf_get_name(args.buf)
+          local is_css = buf_path:match("%.css$") ~= nil
+          for _, inst in pairs(instances_tbl) do
+            server_mod.reload(inst, is_css)
+          end
+        end
+      end,
     })
   end,
 }
