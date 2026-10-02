@@ -51,6 +51,7 @@ require("config.keymaps")
 require("lazy").setup("plugins", opts)
 require("config.venv").setup()
 require("config.floaterminal")
+require("config.ide").setup()
 require("config.antigravity")
 require("config.folder_bookmarks")
 

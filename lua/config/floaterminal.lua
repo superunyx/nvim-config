@@ -109,13 +109,57 @@ vim.api.nvim_create_user_command("PythonRun", function()
   toggle_terminal(string.format("%s %s", vim.fn.fnameescape(python_bin), vim.fn.fnameescape(file)), dir)
 end, {})
 
--- Filetype-aware smart runner (runs Java when in .java, Python when in .py)
+-- HTML / CSS live server run (serves folder and opens current file in browser)
+vim.api.nvim_create_user_command("HtmlRun", function()
+  local ok = pcall(vim.cmd, "LiveServerStart")
+  if not ok then
+    local file = vim.fn.expand("%:t")
+    local dir = vim.fn.expand("%:p:h")
+    if vim.fn.executable("live-server") == 1 then
+      toggle_terminal(string.format("live-server --open=%s", vim.fn.fnameescape(file)), dir)
+    else
+      local full = vim.fn.expand("%:p")
+      vim.ui.open(full)
+    end
+  end
+end, {})
+
+-- JavaScript run (node)
+vim.api.nvim_create_user_command("JsRun", function()
+  local file = vim.fn.expand("%:p")
+  local dir = vim.fn.expand("%:p:h")
+  toggle_terminal(string.format("node %s", vim.fn.fnameescape(file)), dir)
+end, {})
+
+-- TypeScript run
+vim.api.nvim_create_user_command("TsRun", function()
+  local file = vim.fn.expand("%:p")
+  local dir = vim.fn.expand("%:p:h")
+  toggle_terminal(string.format("npx ts-node %s", vim.fn.fnameescape(file)), dir)
+end, {})
+
+-- Shell / Bash run
+vim.api.nvim_create_user_command("BashRun", function()
+  local file = vim.fn.expand("%:p")
+  local dir = vim.fn.expand("%:p:h")
+  toggle_terminal(string.format("bash %s", vim.fn.fnameescape(file)), dir)
+end, {})
+
+-- Filetype-aware smart runner (runs Java, Python, JS, TS, HTML, CSS, Bash)
 vim.api.nvim_create_user_command("CodeRun", function()
   local ft = vim.bo.filetype
   if ft == "java" then
     vim.cmd("JavaRun")
   elseif ft == "python" then
     vim.cmd("PythonRun")
+  elseif ft == "javascript" or ft == "javascriptreact" then
+    vim.cmd("JsRun")
+  elseif ft == "typescript" or ft == "typescriptreact" then
+    vim.cmd("TsRun")
+  elseif ft == "html" or ft == "htmldjango" or ft == "css" or ft == "scss" or ft == "less" then
+    vim.cmd("HtmlRun")
+  elseif ft == "sh" or ft == "bash" then
+    vim.cmd("BashRun")
   else
     vim.notify("No run command configured for filetype: " .. ft, vim.log.levels.WARN)
   end
@@ -127,5 +171,7 @@ vim.keymap.set("n", "<leader>rj", ":JavaRun<CR>", { noremap = true, silent = tru
 vim.keymap.set("n", "<leader>jr", ":JavaRun<CR>", { noremap = true, silent = true, desc = "[J]ava [R]un" })
 vim.keymap.set("n", "<leader>rp", ":PythonRun<CR>", { noremap = true, silent = true, desc = "[R]un [P]ython" })
 vim.keymap.set("n", "<leader>pr", ":PythonRun<CR>", { noremap = true, silent = true, desc = "[P]ython [R]un" })
+vim.keymap.set("n", "<leader>rh", ":HtmlRun<CR>", { noremap = true, silent = true, desc = "[R]un [H]TML / Web" })
+vim.keymap.set("n", "<leader>rn", ":JsRun<CR>", { noremap = true, silent = true, desc = "[R]un [N]ode / JS" })
 vim.keymap.set("n", "<leader>rr", ":CodeRun<CR>", { noremap = true, silent = true, desc = "[R]un current file (Smart)" })
 
