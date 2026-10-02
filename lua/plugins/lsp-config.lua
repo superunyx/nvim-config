@@ -29,13 +29,17 @@ return {
             local on_attach = function(client, bufnr)
                 -- NEVER attach to Java buffers (keeps Java DSA 100% clean)
                 if vim.bo[bufnr].filetype == "java" then
-                    pcall(vim.lsp.buf_detach_client, bufnr, client.id)
+                    vim.schedule(function()
+                        pcall(vim.lsp.buf_detach_client, bufnr, client.id)
+                    end)
                     return
                 end
 
-                -- If IDE features are toggled off for this buffer, detach immediately
+                -- If IDE features are toggled off for this buffer/session, detach immediately
                 if not ide.is_enabled(bufnr) then
-                    pcall(vim.lsp.buf_detach_client, bufnr, client.id)
+                    vim.schedule(function()
+                        pcall(vim.lsp.buf_detach_client, bufnr, client.id)
+                    end)
                     return
                 end
 
