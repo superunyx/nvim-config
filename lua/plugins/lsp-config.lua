@@ -10,8 +10,8 @@ return {
             end
 
             local on_attach = function(client, bufnr)
-                -- Enable diagnostics ONLY for this Python buffer
-                vim.diagnostic.enable(true, { bufnr = bufnr })
+                -- Diagnostics disabled for Python buffers
+                -- vim.diagnostic.enable(true, { bufnr = bufnr })
 
                 -- Setup buffer-local keymaps so they never leak to Java or other buffers
                 local map = function(mode, lhs, rhs, desc)

@@ -49,12 +49,17 @@ require("config.keymaps")
 -- Tell lazy that all plugin specs are found in the plugins directory
 -- Pass it the options we specified above
 require("lazy").setup("plugins", opts)
+require("config.venv").setup()
 require("config.floaterminal")
 require("config.antigravity")
 require("config.folder_bookmarks")
 
 
 
+-- Disable diagnostics globally
+vim.diagnostic.enable(false)
+
+--[[
 -- Keep diagnostics disabled by default, only enable for Python
 vim.api.nvim_create_autocmd("FileType", {
     callback = function(args)
@@ -65,3 +70,4 @@ vim.api.nvim_create_autocmd("FileType", {
         end
     end,
 })
+--]]
