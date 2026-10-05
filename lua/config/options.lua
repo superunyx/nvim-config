@@ -18,7 +18,7 @@ vim.opt.number = true --display line numbers
 vim.opt.relativenumber = true --display relative number line
 vim.opt.numberwidth = 2
 vim.opt.signcolumn = "yes"
-vim.opt.wrap = false
+vim.opt.wrap = true
 vim.opt.scrolloff = 10
 vim.opt.sidescrolloff = 8
 
@@ -53,4 +53,7 @@ vim.opt.cursorline = false
 vim.opt.hlsearch = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
+
+vim.env.EDITOR = "nvim"
+vim.env.VISUAL = "nvim"
 

@@ -1,6 +1,7 @@
-local state = { win = -1 }
+local M = {}
+local state = { win = -1, buf = -1 }
 
-local function create_floating_window(opts)
+local function create_floating_window(opts, existing_buf)
   opts = opts or {}
   local width = opts.width or math.floor(vim.o.columns * 0.8)
   local height = opts.height or math.floor(vim.o.lines * 0.8)
@@ -8,8 +9,10 @@ local function create_floating_window(opts)
   local col = math.floor((vim.o.columns - width) / 2)
   local row = math.floor((vim.o.lines - height) / 2)
 
-  -- New scratch buffer every time
-  local buf = vim.api.nvim_create_buf(false, true)
+  local buf = existing_buf
+  if not buf or not vim.api.nvim_buf_is_valid(buf) then
+    buf = vim.api.nvim_create_buf(false, true)
+  end
 
   local win_config = {
     relative = "editor",
@@ -56,34 +59,78 @@ local function get_selected_folder()
 end
 
 local function toggle_terminal(cmd, target_dir)
-  if not vim.api.nvim_win_is_valid(state.win) then
-    local folder = target_dir or get_selected_folder() or vim.fn.getcwd()
+  if vim.api.nvim_win_is_valid(state.win) then
+    vim.api.nvim_win_hide(state.win)
+    state.win = -1
+    return
+  end
 
-    pcall(function()
-      require("config.venv").auto_activate(folder)
-    end)
+  local folder = target_dir or get_selected_folder() or vim.fn.getcwd()
 
-    local floating = create_floating_window()
+  pcall(function()
+    require("config.venv").auto_activate(folder)
+  end)
+
+  -- Reopen existing interactive terminal session if available and no specific command
+  if not cmd and vim.api.nvim_buf_is_valid(state.buf) then
+    local floating = create_floating_window({}, state.buf)
     state.win = floating.win
-
-    -- Buffer-local keymaps: double escape closes floaterminal
-    local close_opts = { buffer = floating.buf, noremap = true, silent = true, desc = "Close Floaterminal" }
-    vim.keymap.set({ "n", "t" }, "<esc><esc>", function()
-      toggle_terminal()
-    end, close_opts)
-    vim.keymap.set("n", "q", function()
-      toggle_terminal()
-    end, close_opts)
-
-    -- Open terminal and run command if provided
-    local shell_cmd = cmd or vim.o.shell
-    vim.fn.termopen(shell_cmd, { cwd = folder })
-
     vim.cmd("startinsert")
-  else
+    return
+  end
+
+  local floating = create_floating_window()
+  state.win = floating.win
+  if not cmd then
+    state.buf = floating.buf
+  end
+
+  -- Buffer-local keymaps: double escape closes floaterminal
+  local close_opts = { buffer = floating.buf, noremap = true, silent = true, desc = "Close Floaterminal" }
+  vim.keymap.set({ "n", "t" }, "<esc><esc>", function()
+    toggle_terminal()
+  end, close_opts)
+  vim.keymap.set("n", "q", function()
+    toggle_terminal()
+  end, close_opts)
+
+  -- Open terminal and run command if provided
+  local shell_cmd = cmd or vim.o.shell
+  vim.fn.termopen(shell_cmd, {
+    cwd = folder,
+    on_exit = function()
+      if not cmd then
+        state.buf = -1
+      end
+      if vim.api.nvim_win_is_valid(state.win) and vim.api.nvim_win_get_buf(state.win) == floating.buf then
+        vim.api.nvim_win_hide(state.win)
+        state.win = -1
+      end
+    end,
+  })
+
+  vim.cmd("startinsert")
+end
+
+function M.is_open()
+  return vim.api.nvim_win_is_valid(state.win)
+end
+
+function M.hide()
+  if vim.api.nvim_win_is_valid(state.win) then
     vim.api.nvim_win_hide(state.win)
     state.win = -1
   end
+end
+
+function M.show(cmd, target_dir)
+  if not vim.api.nvim_win_is_valid(state.win) then
+    toggle_terminal(cmd, target_dir)
+  end
+end
+
+function M.toggle(cmd, target_dir)
+  toggle_terminal(cmd, target_dir)
 end
 
 -- General floating terminal
@@ -175,3 +222,4 @@ vim.keymap.set("n", "<leader>rh", ":HtmlRun<CR>", { noremap = true, silent = tru
 vim.keymap.set("n", "<leader>rn", ":JsRun<CR>", { noremap = true, silent = true, desc = "[R]un [N]ode / JS" })
 vim.keymap.set("n", "<leader>rr", ":CodeRun<CR>", { noremap = true, silent = true, desc = "[R]un current file (Smart)" })
 
+return M
