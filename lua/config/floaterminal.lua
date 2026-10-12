@@ -102,10 +102,6 @@ local function toggle_terminal(cmd, target_dir)
       if not cmd then
         state.buf = -1
       end
-      if vim.api.nvim_win_is_valid(state.win) and vim.api.nvim_win_get_buf(state.win) == floating.buf then
-        vim.api.nvim_win_hide(state.win)
-        state.win = -1
-      end
     end,
   })
 
