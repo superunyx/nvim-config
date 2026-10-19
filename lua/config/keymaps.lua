@@ -9,11 +9,9 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Remove search high
 -- Exit Vim's terminal mode
 vim.keymap.set("t", "<Esc><Esc>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
 
--- OPTIONAL: Disable arrow keys in normal mode
+-- OPTIONAL: Disable left/right arrow keys in normal mode (<up>/<down> are used by multicursor.nvim)
 vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
 vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
-vim.keymap.set('n', '<up>', '<cmd>echo "Use k to move!!"<CR>')
-vim.keymap.set('n', '<down>', '<cmd>echo "Use j to move!!"<CR>')
 
 -- Better window navigation
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", { desc = "Move focus to the left window" })
@@ -26,6 +24,12 @@ vim.keymap.set("t", "<C-h>", "<C-\\><C-n><C-w>h", { desc = "Move focus to the le
 vim.keymap.set("t", "<C-l>", "<C-\\><C-n><C-w>l", { desc = "Move focus to the right window" })
 vim.keymap.set("t", "<C-j>", "<C-\\><C-n><C-w>j", { desc = "Move focus to the lower window" })
 vim.keymap.set("t", "<C-k>", "<C-\\><C-n><C-w>k", { desc = "Move focus to the upper window" })
+
+-- Resize windows with Alt + hjkl (works in both normal and terminal mode)
+vim.keymap.set({ "n", "t" }, "<M-h>", "<cmd>vertical resize -2<CR>", { desc = "Decrease window width" })
+vim.keymap.set({ "n", "t" }, "<M-l>", "<cmd>vertical resize +2<CR>", { desc = "Increase window width" })
+vim.keymap.set({ "n", "t" }, "<M-j>", "<cmd>resize -2<CR>", { desc = "Decrease window height" })
+vim.keymap.set({ "n", "t" }, "<M-k>", "<cmd>resize +2<CR>", { desc = "Increase window height" })
 
 -- Easily split windows
 vim.keymap.set("n", "<leader>wv", ":vsplit<cr>", { desc = "[W]indow Split [V]ertical" })

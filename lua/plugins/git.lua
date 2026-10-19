@@ -12,8 +12,8 @@ return {
                     changedelete = { text = '~' },
                 },
                 signcolumn = true,  -- Show +/- in the left column
-                linehl     = true,  -- Highlight the whole background of changed lines
-                word_diff  = true,  -- Highlight specific words changed inline
+                linehl     = false, -- Highlight the whole background of changed lines (toggle with <leader>gd)
+                word_diff  = false, -- Highlight specific words changed inline (toggle with <leader>gw)
             })
 
             -- Set a vim motion to <Space> + g + h to preview changes to the file under the cursor in normal mode
