@@ -34,6 +34,14 @@ return {
                         enable = true,
                         picker = function()
                             local wins = vim.api.nvim_tabpage_list_wins(0)
+                            -- Prioritize reusing an Alpha dashboard window so it doesn't stay to the side
+                            for _, w in ipairs(wins) do
+                                local buf = vim.api.nvim_win_get_buf(w)
+                                if vim.bo[buf].filetype == "alpha" then
+                                    return w
+                                end
+                            end
+
                             for _, w in ipairs(wins) do
                                 local buf = vim.api.nvim_win_get_buf(w)
                                 local ft = vim.bo[buf].filetype
