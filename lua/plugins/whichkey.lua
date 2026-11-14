@@ -35,7 +35,7 @@ return {
       { "<leader>b", group = "[B]ookmarks" },
       { "<leader>b_", hidden = true },
 
-      { "<leader>m", group = "[M]olten / Jupyter" },
+      { "<leader>m", group = "[M]arkdown / Molten" },
       { "<leader>m_", hidden = true },
 
       { "<leader>r", group = "[R]un" },
