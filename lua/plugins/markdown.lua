@@ -128,13 +128,14 @@ return {
                     local direct_width = nil
                     local total_children = 0
                     local checked_children = 0
+                    local progress_sum = 0
                     for j = parent_idx + 1, #lines do
                         local cl = lines[j]
                         if cl:match("^#+%s") then
                             break
                         end
                         if not cl:match("^%s*$") then
-                            local ch_indent, _, ch_state = parse_checkbox(cl)
+                            local ch_indent, _, ch_state, ch_rest = parse_checkbox(cl)
                             if ch_indent then
                                 if #ch_indent <= parent_width then
                                     break
@@ -146,6 +147,12 @@ return {
                                     total_children = total_children + 1
                                     if ch_state == "x" or ch_state == "X" then
                                         checked_children = checked_children + 1
+                                        progress_sum = progress_sum + 1
+                                    elseif ch_state ~= "~" and ch_rest then
+                                        local child_pct = ch_rest:match("%d+/%d+%((%d+)%%%)%s*$")
+                                        if child_pct then
+                                            progress_sum = progress_sum + (tonumber(child_pct) / 100)
+                                        end
                                     end
                                 end
                             else
@@ -164,7 +171,7 @@ return {
                         elseif p_state == "x" or p_state == "X" then
                             new_parent_state = " "
                         end
-                        local pct = math.floor((checked_children / total_children) * 100 + 0.5)
+                        local pct = math.floor((progress_sum / total_children) * 100 + 0.5)
                         local clean_rest = p_rest:gsub("%s*%d+/%d+%(%d+%%%)%s*$", ""):gsub("%s+$", "")
                         lines[parent_idx] = string.format(
                             "%s%s[%s]%s %d/%d(%d%%)",
